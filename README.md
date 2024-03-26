@@ -9,7 +9,7 @@ The code is far from completed as I will keep adding stuff as I continue using t
 Summary
 -------
 - Tested with UnrealEngine5.
-- Updated imgui lib to 1.90.4
+- Updated imgui lib to 1.90.4.
 - Created simple framework to add imgui debug to any class/struct.
 
 How to
