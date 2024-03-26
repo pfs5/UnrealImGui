@@ -3,11 +3,11 @@
 #pragma once
 
 #include "ImGuiDelegates.h"
+#include "ImGuiListenerHandler.h"
 #include "ImGuiModuleProperties.h"
 #include "ImGuiTextureHandle.h"
 
 #include <Modules/ModuleManager.h>
-
 
 class FImGuiModule : public IModuleInterface
 {
@@ -32,6 +32,11 @@ public:
 	static inline bool IsAvailable()
 	{
 		return FModuleManager::Get().IsModuleLoaded("ImGui");
+	}
+
+	static FImGuiListenerHandler* GetListenerHandler()
+	{
+		return IsAvailable() ? &Get().ListenerHandler : nullptr;
 	}
 
 #if IMGUI_WITH_OBSOLETE_DELEGATES
@@ -184,4 +189,7 @@ private:
 	friend struct FImGuiContextHandle;
 	friend struct FImGuiDelegatesContainerHandle;
 #endif
+
+private:
+	FImGuiListenerHandler ListenerHandler;
 };
