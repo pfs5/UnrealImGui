@@ -2,7 +2,7 @@ Unreal ImGui ++
 ============
 Fork of the UnrealEngine plugin integrating **ImGUI** into the engine.
 
-I have added some small improvements for my personal use and hereby made them public if someone else might find them useful. The setup has not changed so please see the original repository for instructions.
+I have added some small improvements for my personal use and hereby made them public if someone else might find them useful.
 
 The code is far from completed as I will keep adding stuff as I continue using this.
 
@@ -11,6 +11,17 @@ Summary
 - Tested with UnrealEngine5.
 - Updated imgui lib to 1.90.4.
 - Created simple framework to add imgui debug to any class/struct.
+
+Setup
+-----
+Basic setup is done as for every Unreal plugin.
+1. In the root folder of your project (where the .uproject file is located), find or create the `Plugins` folder.
+2. In there either clone this repository or paste the downloaded zip. The files in this repository should end up in `<project_root>/Plugins/ImGui`.
+3. Double click on your .uproject file. A prompt about rebuilding the `ImGui` module should appear, press **yes**.
+4. Add the module in `<project_name>.Build.cs`, for example
+    - `PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "ImGui" });`
+5. Finally, regenerate the Visual Studio project by right-clicking on the .uproject file > `Generate Visual Studio project files`.
+6. _Voilà_! Your plugin should work now. For additional setup information please see the original repository. 
 
 How to
 ------
