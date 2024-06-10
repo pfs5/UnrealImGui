@@ -1,6 +1,10 @@
 #include "ImGuiListenerHandler.h"
 
+#include "imgui.h"
 #include "ImGuiListener.h"
+#include "ImGuiModule.h"
+#include "ImGuiModuleSettings.h"
+#include "Utilities/ImGuiHelpers.h"
 #include "Templates/TypeHash.h"
 
 FImGuiListenerHandler::FListenerData::FListenerData(ImGui::IImGuiListener& listener) :
@@ -48,7 +52,12 @@ void FImGuiListenerHandler::Tick(float deltaSeconds)
 
 	_lastTickedFrameNumber = GFrameCounter;
 
-	Draw();
+#if !UE_BUILD_SHIPPING
+	if(FImGuiModule::Get().GetProperties().IsImGuiVisible())
+	{
+		Draw();
+	}
+#endif //!UE_BUILD_SHIPPING
 }
 
 bool FImGuiListenerHandler::IsTickableInEditor() const
@@ -82,6 +91,7 @@ void FImGuiListenerHandler::UnregisterListener(ImGui::IImGuiListener& listener)
 	_listeners.Remove(listener);
 }
 
+#if !UE_BUILD_SHIPPING
 void FImGuiListenerHandler::Draw()
 {
 	// Draw menu
@@ -90,6 +100,13 @@ void FImGuiListenerHandler::Draw()
 
 	if (ImGui::BeginMainMenuBar())
 	{
+		const float leftPadding = 	FImGuiModule::Get().GetSettings().GetImGuiMenuLeftPadding();
+		if (leftPadding > 0.f)
+		{
+			ImGui::InvisibleButton("##Padding", ImVec2{leftPadding, 0.f});
+			ImGui::Text(" | ");
+		}
+		
 		if (ImGui::BeginMenu("Listeners"))
 		{
 			static TArray<FListenerData*> listeners;
@@ -106,7 +123,11 @@ void FImGuiListenerHandler::Draw()
 				listeners.Sort([](const FListenerData& lhs, const FListenerData& rhs) { return lhs.Name < rhs.Name; });
 			}
 
-			for (FListenerData* listener : listeners)
+			if (listeners.IsEmpty())
+			{
+				ImGui::Text("No registered listeners.");
+			}
+			else for (FListenerData* listener : listeners)
 			{
 				ImGui::MenuItem(TCHAR_TO_UTF8(*listener->Name), nullptr, &listener->IsOpen);
 			}
@@ -141,6 +162,7 @@ void FImGuiListenerHandler::Draw()
 		}
 	}
 }
+#endif //!UE_BUILD_SHIPPING
 
 void FImGuiListenerHandler::OnEndPIE(const bool isSimulating)
 {
@@ -163,7 +185,7 @@ void FImGuiListenerHandler::BuildWindowCache()
 		}
 
 		// Cache window data
-		if (const ImGuiWindow* window = ImGui::FindWindowByName(TCHAR_TO_UTF8(*listener.Name)))
+		if (ImGuiHelpers::WindowExists(TCHAR_TO_UTF8(*listener.Name)))
 		{
 			_cachedWindows.Emplace(listener.Name);
 		}

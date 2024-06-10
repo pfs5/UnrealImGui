@@ -218,6 +218,11 @@ const FImGuiModuleProperties& FImGuiModule::GetProperties() const
 	return ImGuiModuleManager->GetProperties();
 }
 
+const FImGuiModuleSettings& FImGuiModule::GetSettings()
+{
+	return ImGuiModuleManager->GetSettings();
+}
+
 bool FImGuiModule::IsInputMode() const
 {
 	return ImGuiModuleManager && ImGuiModuleManager->GetProperties().IsInputEnabled();

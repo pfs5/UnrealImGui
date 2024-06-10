@@ -9,6 +9,8 @@
 
 #include <Modules/ModuleManager.h>
 
+class FImGuiModuleSettings;
+
 class FImGuiModule : public IModuleInterface
 {
 public:
@@ -132,6 +134,8 @@ public:
 	 */
 	virtual FImGuiModuleProperties& GetProperties();
 	virtual const FImGuiModuleProperties& GetProperties() const;
+
+	const FImGuiModuleSettings& GetSettings();
 
 	/**
 	 * DEPRECIATED: Please use GetProperties() as this function is scheduled for removal.

@@ -116,7 +116,9 @@ void FImGuiModuleSettings::UpdateSettings()
 		SetShareMouseInput(SettingsObject->bShareMouseInput);
 		SetUseSoftwareCursor(SettingsObject->bUseSoftwareCursor);
 		SetToggleInputKey(SettingsObject->ToggleInput);
+		SetToggleImGuiVisibilityKey(SettingsObject->ToggleImGuiVisibility);
 		SetCanvasSizeInfo(SettingsObject->CanvasSize);
+		SetImGuiMenuLeftPadding(SettingsObject->ImGuiMenuLeftPadding);
 	}
 }
 
@@ -182,6 +184,15 @@ void FImGuiModuleSettings::SetToggleInputKey(const FImGuiKeyInfo& KeyInfo)
 	}
 }
 
+void FImGuiModuleSettings::SetToggleImGuiVisibilityKey(const FImGuiKeyInfo& KeyInfo)
+{
+	if (ToggleImGuiVisibilityKey != KeyInfo)
+	{
+		ToggleImGuiVisibilityKey = KeyInfo;
+		Commands.SetKeyBinding(FImGuiModuleCommands::ToggleVisibility, ToggleImGuiVisibilityKey);
+	}
+}
+
 void FImGuiModuleSettings::SetCanvasSizeInfo(const FImGuiCanvasSizeInfo& CanvasSizeInfo)
 {
 	if (CanvasSize != CanvasSizeInfo)
@@ -195,6 +206,11 @@ void FImGuiModuleSettings::SetDPIScaleInfo(const FImGuiDPIScaleInfo& ScaleInfo)
 {
 	DPIScale = ScaleInfo;
 	OnDPIScaleChangedDelegate.Broadcast(DPIScale);
+}
+
+void FImGuiModuleSettings::SetImGuiMenuLeftPadding(float Value)
+{
+	ImGuiMenuLeftPadding = Value;
 }
 
 #if WITH_EDITOR

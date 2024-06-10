@@ -13,7 +13,7 @@ public:
 	void Init();
 	void Shutdown();
 
-	void Tick(float deltaSeconds) final;
+	void Tick(float deltaSeconds) final; 
 	bool IsTickable() const final { return _initialized; }
 	bool IsTickableInEditor() const final;
 	TStatId GetStatId() const final;
@@ -58,7 +58,9 @@ private:
 	bool _cacheWindows = true;
 
 private:
+#if !UE_BUILD_SHIPPING
 	void Draw();
+#endif //!UE_BUILD_SHIPPING
 
 	void OnEndPIE(const bool isSimulating);
 	void BuildWindowCache();

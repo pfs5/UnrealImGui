@@ -210,10 +210,19 @@ protected:
 	UPROPERTY(EditAnywhere, config, Category = "Keyboard Shortcuts")
 	FImGuiKeyInfo ToggleInput;
 
+	// Define a shortcut key to toggle the visibility of all ImGui windows and menus.
+	UPROPERTY(EditAnywhere, config, Category = "Keyboard Shortcuts")
+	FImGuiKeyInfo ToggleImGuiVisibility;
+	
 	// Chose how to define the ImGui canvas size. Select between custom, desktop and viewport.
 	UPROPERTY(EditAnywhere, config, Category = "Canvas Size")
 	FImGuiCanvasSizeInfo CanvasSize;
 
+	// Unreal usually displays all sorts of messages in the top left corner which make the ImGui menu hard to see.
+	// With this, you can push all the submenus to the right, making it easier to use.
+	UPROPERTY(EditAnywhere, config, Category = "Layout")
+	float ImGuiMenuLeftPadding = 0.f;
+	
 	// Setup DPI Scale.
 	UPROPERTY(EditAnywhere, config, Category = "DPI Scale", Meta = (ShowOnlyInnerProperties))
 	FImGuiDPIScaleInfo DPIScale;
@@ -267,6 +276,8 @@ public:
 	// Get the DPI Scale information.
 	const FImGuiDPIScaleInfo& GetDPIScaleInfo() const { return DPIScale; }
 
+	float GetImGuiMenuLeftPadding() const { return ImGuiMenuLeftPadding; }
+	
 	// Delegate raised when ImGui Input Handle is changed.
 	FStringClassReferenceChangeDelegate OnImGuiInputHandlerClassChanged;
 
@@ -291,8 +302,10 @@ private:
 	void SetShareMouseInput(bool bShare);
 	void SetUseSoftwareCursor(bool bUse);
 	void SetToggleInputKey(const FImGuiKeyInfo& KeyInfo);
+	void SetToggleImGuiVisibilityKey(const FImGuiKeyInfo& KeyInfo);
 	void SetCanvasSizeInfo(const FImGuiCanvasSizeInfo& CanvasSizeInfo);
 	void SetDPIScaleInfo(const FImGuiDPIScaleInfo& ScaleInfo);
+	void SetImGuiMenuLeftPadding(float Value);
 
 #if WITH_EDITOR
 	void OnPropertyChanged(class UObject* ObjectBeingModified, struct FPropertyChangedEvent& PropertyChangedEvent);
@@ -303,8 +316,10 @@ private:
 
 	FSoftClassPath ImGuiInputHandlerClass;
 	FImGuiKeyInfo ToggleInputKey;
+	FImGuiKeyInfo ToggleImGuiVisibilityKey;
 	FImGuiCanvasSizeInfo CanvasSize;
 	FImGuiDPIScaleInfo DPIScale;
+	float ImGuiMenuLeftPadding = 0.f;
 	bool bShareKeyboardInput = false;
 	bool bShareGamepadInput = false;
 	bool bShareMouseInput = false;

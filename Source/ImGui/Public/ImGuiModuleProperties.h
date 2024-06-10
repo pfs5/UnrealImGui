@@ -72,6 +72,12 @@ public:
 	/** Toggle ImGui demo. */
 	void ToggleDemo() { SetShowDemo(!ShowDemo()); }
 
+	/** Toggle visibility of all ImGui windows and menus */
+	void ToggleVisibility() { bImGuiVisible = !bImGuiVisible; }
+
+	/** */
+	bool IsImGuiVisible() const { return bImGuiVisible; }
+	
 	/** Adds a new font to initialize */
 	void AddCustomFont(FName FontName, TSharedPtr<ImFontConfig> Font) { CustomFonts.Emplace(FontName, Font); }
 
@@ -93,6 +99,7 @@ private:
 	bool bMouseInputShared = false;
 
 	bool bShowDemo = false;
+	bool bImGuiVisible = false;
 
 	TMap<FName, TSharedPtr<ImFontConfig>> CustomFonts;
 };

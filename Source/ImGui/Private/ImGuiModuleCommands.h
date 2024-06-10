@@ -21,6 +21,7 @@ public:
 	static const TCHAR* const ToggleMouseInputSharing;
 	static const TCHAR* const SetMouseInputSharing;
 	static const TCHAR* const ToggleDemo;
+	static const TCHAR* const ToggleVisibility;
 
 	FImGuiModuleCommands(FImGuiModuleProperties& InProperties);
 
@@ -36,6 +37,7 @@ private:
 	void ToggleMouseInputSharingImpl();
 	void SetMouseInputSharingImpl(const TArray< FString >& Args);
 	void ToggleDemoImpl();
+	void ToggleVisibilityImpl();
 
 	FImGuiModuleProperties& Properties;
 
@@ -47,4 +49,5 @@ private:
 	FAutoConsoleCommand ToggleMouseInputSharingCommand;
 	FAutoConsoleCommand SetMouseInputSharingCommand;
 	FAutoConsoleCommand ToggleDemoCommand;
+	FAutoConsoleCommand ToggleVisibilityCommand;
 };
