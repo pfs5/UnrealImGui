@@ -25,7 +25,8 @@ Basic setup is done as for every Unreal plugin.
 
 How to
 ------
-- The menu bar at the top of the screen will automatically be displayed in the Unreal editor.
+- The ImGui menu bar at the top of the screen is enabled by the default shortcut `F1`.
+- The default shortcut can be changed in `Project Settings\Plugins\ImGui\Toggle ImGui Visibility`.
 - The "Listeners" menu will show all object with debug implemented.
 
 ### Adding debug to a class
